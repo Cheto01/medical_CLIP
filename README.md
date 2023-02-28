@@ -36,3 +36,12 @@ To use the Roberta model for text encoding and add a hyperparameter search using
 9. Get the best hyperparameters found by Optuna and retrain the model using those hyperparameters.
 
 10. Using a function, we calculated the  `F1 score` on the test set by comparing the binary predictions to the ground truth labels using the `compute_f1_score` function. Note that we need to convert the predictions and labels back to CPU before computing the `F1 score`.
+
+
+# Stacking models
+
+In `stack_model.py`, we define a new `ImageEncoder` class that loads ResNet152, ResNet18, and DenseNet from the torchvision.models module, removes their last fully connected layer, and concatenates their features. We freeze all parameters of these models to prevent them from being trained during training.
+
+We can use the same dataset and the Roberta model for text encoding as before, and we can use the same training and evaluation code with the new `ImageEncoder` class. 
+
+To do so, import `stack_model.ImageEncoder` and replace the `image_encoder` in the `roberta_clip_optuna.py` (row 63) to use the staking model instead of ResNet50.
